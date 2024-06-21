@@ -12,11 +12,9 @@ const register = async (req, res)=>{
         }
         user = new User({name: name,email: email,password: password,isPublic: isPublic});
         const salt= await bycrpt.genSalt(10);
-        user.password = await bycrpt.hash(password,salt);
+        user.password = await bycrpt.hashSync(password,salt);
         await user.save();
-
-        // const payload = {user: { id: user.id }};
-        // const token = jwt.sign(payload,config.jwtSecret,{expiresIn:'1h'});
+        
         res.json(user);
     } catch(err){
         console.error(err.message);
@@ -30,7 +28,7 @@ const login = async(req, res)=>{
         const user = await User.findOne({email:data.email});
         if(!user) return res.status(401).json({msg:'Invalid Credential'});
         
-        const isMatch = await bycrpt.compare(data.password, user.password);
+        const isMatch = await bycrpt.compareSync(data.password, user.password);
         if(!isMatch) return res.status(401).json({msg:'Invalid Credential'});
 
         const payload = {id: user.id, role: user.role};

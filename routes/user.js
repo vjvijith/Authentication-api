@@ -11,7 +11,7 @@ const updateProfileSchema = Joi.object({
     email: Joi.string().email().optional(),
     bio: Joi.string().optional(),
     phone: Joi.string().optional(),
-    isPublic: Joi.boolean().optional(),
+    isPublic: Joi.boolean().optional()
     // Any other fields you want to validate
 });
 
@@ -24,7 +24,7 @@ const validateUpdateProfile = (req, res, next) => {
 };
 
 
-router.route('/update').put(auth,upload.single('photo'),userControl.updateProfile,validateUpdateProfile, updateProfile);
+router.route('/update').put(auth,upload.single('photo'),userControl.updateProfile,validateUpdateProfile);
 router.route('/public-profile').get(userControl.listPublicProfile);
 router.route('/profile/:name').get(auth,userControl.getUserProfile);
 

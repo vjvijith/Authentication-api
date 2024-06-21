@@ -22,7 +22,7 @@ const validateUpdateProfile = (req, res, next) => {
     next();
 };
 
-router.route('/register').post(authControl.register,validateUpdateProfile, updateProfile);
+router.route('/register').post(authControl.register,validateUpdateProfile);
 router.route('/login').post(authControl.login);
 router.route('/profile').get(isAuth,authControl.getProfile);
 
